@@ -11,35 +11,36 @@
   --neon-accent: #00ff00;
   --neon-warning: #ffff00;
   --neon-danger: #ff0040;
-  
+
   /* Neon Glow Effects */
   --neon-glow-sm: 0 0 5px currentColor, 0 0 10px currentColor;
   --neon-glow-md: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
-  --neon-glow-lg: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor, 0 0 60px currentColor;
-  
+  --neon-glow-lg:
+    0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor, 0 0 60px currentColor;
+
   /* Background Colors */
   --bg-primary: #0a0a0a;
   --bg-secondary: #1a1a1a;
   --bg-tertiary: #2a2a2a;
-  
+
   /* Typography */
-  --font-main: 'Orbitron', monospace;
+  --font-main: "Orbitron", monospace;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
   --font-weight-black: 900;
-  
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 2rem;
   --spacing-xl: 3rem;
-  
+
   /* Animation Durations */
   --anim-fast: 0.15s;
   --anim-normal: 0.3s;
   --anim-slow: 0.6s;
-  
+
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -64,19 +65,29 @@ body {
   color: var(--neon-primary);
   min-height: 100vh;
   overflow-x: hidden;
-  
+
   /* Background Pattern */
-  background-image: 
+  background-image:
     radial-gradient(circle at 25% 25%, var(--neon-primary) 0%, transparent 50%),
     radial-gradient(circle at 75% 75%, var(--neon-secondary) 0%, transparent 50%);
   background-size: 200px 200px;
-  background-position: 0 0, 100px 100px;
+  background-position:
+    0 0,
+    100px 100px;
   animation: backgroundPulse 4s ease-in-out infinite alternate;
 }
 
 @keyframes backgroundPulse {
-  0% { background-position: 0 0, 100px 100px; }
-  100% { background-position: 20px 20px, 120px 120px; }
+  0% {
+    background-position:
+      0 0,
+      100px 100px;
+  }
+  100% {
+    background-position:
+      20px 20px,
+      120px 120px;
+  }
 }
 
 /* Game Container Layout */
@@ -104,12 +115,14 @@ body {
 }
 
 @keyframes titlePulse {
-  0% { text-shadow: var(--neon-glow-lg); }
-  100% { 
-    text-shadow: 
-      0 0 20px var(--neon-primary), 
-      0 0 40px var(--neon-primary), 
-      0 0 60px var(--neon-primary), 
+  0% {
+    text-shadow: var(--neon-glow-lg);
+  }
+  100% {
+    text-shadow:
+      0 0 20px var(--neon-primary),
+      0 0 40px var(--neon-primary),
+      0 0 60px var(--neon-primary),
       0 0 80px var(--neon-primary);
   }
 }
@@ -134,7 +147,7 @@ body {
   border-radius: var(--radius-md);
   box-shadow: var(--neon-glow-md);
   background: rgba(0, 0, 0, 0.8);
-  
+
   /* Hardware acceleration */
   transform: translateZ(0);
   will-change: transform;
@@ -196,7 +209,7 @@ body {
   transition: all var(--anim-fast) ease;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  
+
   /* Hardware acceleration */
   transform: translateZ(0);
   will-change: transform, box-shadow;
@@ -311,19 +324,19 @@ body {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .game-sidebar {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     min-width: auto;
   }
-  
+
   .neon-panel {
     flex: 1;
     min-width: 150px;
   }
-  
+
   .game-title {
     font-size: 2rem;
   }
@@ -335,8 +348,13 @@ body {
 }
 
 @keyframes lineCleared {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .level-up-glow {
@@ -344,15 +362,15 @@ body {
 }
 
 @keyframes levelUp {
-  0% { 
+  0% {
     box-shadow: var(--neon-glow-sm);
     transform: scale(1);
   }
-  50% { 
+  50% {
     box-shadow: var(--neon-glow-lg);
     transform: scale(1.05);
   }
-  100% { 
+  100% {
     box-shadow: var(--neon-glow-sm);
     transform: scale(1);
   }
@@ -363,11 +381,12 @@ body {
 }
 
 @keyframes gameOver {
-  0%, 100% { 
+  0%,
+  100% {
     border-color: var(--neon-danger);
     box-shadow: 0 0 20px var(--neon-danger);
   }
-  50% { 
+  50% {
     border-color: var(--neon-warning);
     box-shadow: 0 0 40px var(--neon-warning);
   }

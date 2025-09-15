@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Tetris - Game Test</title>
+    <style>
+      body {
+        background: #000;
+        color: #00ffff;
+        font-family: monospace;
+        padding: 20px;
+      }
+      .test-result {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #00ffff;
+        border-radius: 5px;
+      }
+      .success {
+        border-color: #00ff00;
+        color: #00ff00;
+      }
+      .error {
+        border-color: #ff0000;
+        color: #ff0000;
+      }
+      .warning {
+        border-color: #ffff00;
+        color: #ffff00;
+      }
+      #console-log {
+        background: #111;
+        padding: 10px;
+        margin: 20px 0;
+        max-height: 300px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎮 Neon Tetris - Browser Test</h1>
+
+    <div id="test-results"></div>
+
+    <h3>Console Output:</h3>
+    <div id="console-log"></div>
+
+    <h3>Quick Actions:</h3>
+    <button onclick="window.location.href='/'">Go to Main Game</button>
+    <button onclick="runTests()">Run Tests Again</button>
+
+    <script type="module">
+      const results = document.getElementById('test-results');
+      const consoleLog = document.getElementById('console-log');
+
+      // Capture console output
+      const originalLog = console.log;
+      const originalError = console.error;
+      const originalWarn = console.warn;
+
+      console.log = (...args) => {
+        originalLog(...args);
+        consoleLog.textContent += '[LOG] ' + args.join(' ') + '\n';
+        consoleLog.scrollTop = consoleLog.scrollHeight;
+      };
+
+      console.error = (...args) => {
+        originalError(...args);
+        consoleLog.textContent += '[ERROR] ' + args.join(' ') + '\n';
+        consoleLog.scrollTop = consoleLog.scrollHeight;
+      };
+
+      console.warn = (...args) => {
+        originalWarn(...args);
+        consoleLog.textContent += '[WARN] ' + args.join(' ') + '\n';
+        consoleLog.scrollTop = consoleLog.scrollHeight;
+      };
+
+      function addResult(message, type = 'success') {
+        const div = document.createElement('div');
+        div.className = `test-result ${type}`;
+        div.textContent = message;
+        results.appendChild(div);
+      }
+
+      window.runTests = async function () {
+        results.innerHTML = '';
+        consoleLog.textContent = '';
+
+        console.log('🎮 Starting browser tests...');
+
+        try {
+          // Test 1: Module imports
+          console.log('Testing module imports...');
+          const { GameEngine } = await import('./src/services/GameEngine.js');
+          const { Renderer } = await import('./src/rendering/Renderer.js');
+          const { InputHandler } = await import('./src/input/InputHandler.js');
+          const { StorageManager } = await import('./src/storage/StorageManager.js');
+          const { GameSettings } = await import('./src/models/GameSettings.js');
+
+          addResult('✅ All modules imported successfully', 'success');
+
+          // Test 2: Object creation
+          console.log('Testing object creation...');
+          const gameSettings = new GameSettings();
+          const gameEngine = new GameEngine();
+          const renderer = new Renderer();
+          const inputHandler = new InputHandler(gameSettings);
+          const storageManager = new StorageManager();
+
+          addResult('✅ All objects created successfully', 'success');
+
+          // Test 3: Game engine initialization
+          console.log('Testing game engine...');
+          gameEngine.initialize();
+          addResult('✅ Game engine initialized', 'success');
+
+          // Test 4: Canvas test
+          console.log('Testing canvas...');
+          const canvas = document.createElement('canvas');
+          canvas.width = 320;
+          canvas.height = 640;
+          document.body.appendChild(canvas);
+
+          const theme = gameSettings.getCurrentTheme();
+          renderer.initialize(canvas, theme);
+          addResult('✅ Canvas and renderer initialized', 'success');
+
+          // Test 5: Storage test
+          console.log('Testing storage...');
+          const isStorageAvailable = storageManager.isStorageAvailable();
+          addResult(
+            `✅ Storage available: ${isStorageAvailable}`,
+            isStorageAvailable ? 'success' : 'warning'
+          );
+
+          // Test 6: Input handler
+          console.log('Testing input handler...');
+          inputHandler.enable();
+          addResult('✅ Input handler enabled', 'success');
+
+          // Test 7: Game flow
+          console.log('Testing game flow...');
+
+          gameEngine.addEventListener('gameStarted', () => {
+            addResult('✅ Game started event received', 'success');
+          });
+
+          // Start game briefly
+          gameEngine.start();
+
+          // Test state
+          const gameState = gameEngine.getState();
+          addResult(`✅ Game state: ${gameState.gameStatus}`, 'success');
+          addResult(`✅ Score: ${gameState.score.currentScore}`, 'success');
+          addResult(`✅ Level: ${gameState.score.level}`, 'success');
+
+          // Test input
+          gameEngine.handleInput({ action: 'moveLeft', key: 'ArrowLeft' });
+          addResult('✅ Input handling works', 'success');
+
+          // Pause and cleanup
+          gameEngine.pause();
+          gameEngine.reset();
+          inputHandler.disable();
+
+          addResult('🎉 All tests passed! Game is ready.', 'success');
+        } catch (error) {
+          console.error('Test failed:', error);
+          addResult(`❌ Test failed: ${error.message}`, 'error');
+        }
+      };
+
+      // Run tests on load
+      runTests();
+    </script>
+  </body>
+</html>

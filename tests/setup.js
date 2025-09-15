@@ -88,8 +88,7 @@ expect.extend({
   toBeWithinFPS(received, target = 60, tolerance = 5) {
     const pass = Math.abs(received - target) <= tolerance;
     return {
-      message: () => 
-        `expected ${received} FPS to be within ${tolerance} of target ${target} FPS`,
+      message: () => `expected ${received} FPS to be within ${tolerance} of target ${target} FPS`,
       pass,
     };
   },
@@ -98,7 +97,7 @@ expect.extend({
     const required = ['board', 'score', 'level', 'gameStatus'];
     const pass = required.every(prop => Object.prototype.hasOwnProperty.call(received, prop));
     return {
-      message: () => 
+      message: () =>
         `expected object to have required game state properties: ${required.join(', ')}`,
       pass,
     };
@@ -108,7 +107,7 @@ expect.extend({
     const required = ['type', 'shape', 'position', 'rotation'];
     const pass = required.every(prop => Object.prototype.hasOwnProperty.call(received, prop));
     return {
-      message: () => 
+      message: () =>
         `expected object to have required tetromino properties: ${required.join(', ')}`,
       pass,
     };
@@ -135,12 +134,13 @@ global.TestUtils = {
   }),
 
   // Wait for next animation frame
-  waitForAnimationFrame: () => new Promise(resolve => {
-    global.requestAnimationFrame(resolve);
-  }),
+  waitForAnimationFrame: () =>
+    new Promise(resolve => {
+      global.requestAnimationFrame(resolve);
+    }),
 
   // Simulate time passing
-  advanceTime: (ms) => {
+  advanceTime: ms => {
     jest.advanceTimersByTime(ms);
   },
 };
