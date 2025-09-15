@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Tetris - Modern Tetris Game</title>
+    <meta name="description" content="Modern neon-themed Tetris game with smooth animations and glowing effects">
+    <link rel="stylesheet" href="styles/neon-theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">NEON TETRIS</h1>
+        </header>
+        
+        <main class="game-main">
+            <div class="game-area">
+                <canvas id="game-canvas" width="320" height="640"></canvas>
+                <div class="game-overlay" id="game-overlay">
+                    <div class="game-menu" id="game-menu">
+                        <h2>Get Ready!</h2>
+                        <button class="neon-button" id="start-button">START GAME</button>
+                        <button class="neon-button" id="settings-button">SETTINGS</button>
+                        <div class="controls-info">
+                            <h3>Controls</h3>
+                            <p>← → Move</p>
+                            <p>↑ Rotate</p>
+                            <p>↓ Soft Drop</p>
+                            <p>Space Hard Drop</p>
+                            <p>P Pause</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <aside class="game-sidebar">
+                <div class="score-panel neon-panel">
+                    <h3>Score</h3>
+                    <div class="score-value" id="score-display">0</div>
+                </div>
+                
+                <div class="level-panel neon-panel">
+                    <h3>Level</h3>
+                    <div class="level-value" id="level-display">1</div>
+                </div>
+                
+                <div class="lines-panel neon-panel">
+                    <h3>Lines</h3>
+                    <div class="lines-value" id="lines-display">0</div>
+                </div>
+                
+                <div class="next-panel neon-panel">
+                    <h3>Next</h3>
+                    <canvas id="next-canvas" width="120" height="120"></canvas>
+                </div>
+                
+                <div class="highscore-panel neon-panel">
+                    <h3>High Score</h3>
+                    <div class="highscore-value" id="highscore-display">0</div>
+                </div>
+            </aside>
+        </main>
+        
+        <footer class="game-footer">
+            <div class="performance-info" id="performance-info">
+                <span id="fps-counter">FPS: 60</span>
+                <span id="frame-time">16ms</span>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Game Scripts -->
+    <script type="module" src="src/index.js"></script>
+    
+    <!-- Performance Monitoring (Development) -->
+    <script>
+        // Simple FPS counter for development
+        if (window.location.hostname === 'localhost') {
+            let lastTime = performance.now();
+            let fps = 0;
+            let frameCount = 0;
+            
+            function updateFPS() {
+                const now = performance.now();
+                frameCount++;
+                
+                if (now - lastTime >= 1000) {
+                    fps = Math.round((frameCount * 1000) / (now - lastTime));
+                    document.getElementById('fps-counter').textContent = `FPS: ${fps}`;
+                    document.getElementById('frame-time').textContent = `${Math.round(1000/fps)}ms`;
+                    frameCount = 0;
+                    lastTime = now;
+                }
+                
+                requestAnimationFrame(updateFPS);
+            }
+            
+            requestAnimationFrame(updateFPS);
+        }
+    </script>
+</body>
+</html>
