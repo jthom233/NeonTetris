@@ -1,50 +1,62 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Tetris Game Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Modular Design
+Every feature must be implemented as a self-contained, independently testable module. Modules must have clear interfaces with single responsibility. No direct dependencies between game logic, rendering, input handling, or storage systems.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Test-First Development (NON-NEGOTIABLE)
+TDD mandatory: Tests written → Tests fail → Then implement. Red-Green-Refactor cycle strictly enforced. All commits must include failing tests before implementation code.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Performance Requirements
+Maintain 60 FPS rendering under normal gameplay. All frame updates must complete within 16ms. Memory allocation during gameplay minimized through object pooling. No frame drops during animations or line clears.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Browser Compatibility
+Support modern browsers: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+. Use vanilla JavaScript ES2022 with graceful feature detection. No framework dependencies that compromise performance or compatibility.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Simplicity
+Start simple, follow YAGNI principles. Avoid over-engineering patterns unless performance requires it. Direct implementations preferred over abstraction layers. Clear code over clever code.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Development Standards
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Technology Stack
+- **Frontend**: Vanilla JavaScript ES2022, HTML5 Canvas, CSS3
+- **Testing**: Jest (unit), Playwright (integration), custom performance benchmarks
+- **Build**: ES modules, no bundler complexity unless required
+- **Storage**: localStorage only, no external dependencies
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### Code Quality
+- All functions under 50 lines unless rendering/math requires more
+- Clear naming conventions: verbs for functions, nouns for classes
+- Comprehensive error handling with user-friendly messages
+- Console logging with structured format for debugging
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Quality Gates
+
+### Pre-Implementation
+- Feature specification approved and complete
+- Interface contracts defined and validated
+- Test scenarios written and failing
+- Performance impact assessed
+
+### Implementation
+- All tests passing before code review
+- Performance benchmarks maintained
+- Browser compatibility verified
+- Documentation updated
+
+### Deployment
+- Full test suite passing
+- Performance validation complete
+- Cross-browser testing passed
+- User acceptance criteria met
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices. All code reviews must verify compliance with these principles. Any deviations must be justified and documented. 
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Performance requirements are non-negotiable - if feature implementation cannot maintain 60 FPS, the approach must be reconsidered.
+
+Use `.github/copilot-instructions.md` for runtime development guidance and patterns.
+
+**Version**: 1.0.0 | **Ratified**: September 15, 2025 | **Last Amended**: September 15, 2025

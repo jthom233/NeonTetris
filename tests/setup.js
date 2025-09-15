@@ -1,7 +1,14 @@
 // Jest setup for Tetris Game tests
 // This file is run before each test file
 
-// Mock Canvas API for tests
+/**
+ * Simple Jest Test Setup for RED Phase
+ */
+
+// Basic test utilities
+global.TestUtils = {
+  redPhaseTest: true,
+};
 global.HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
   fillRect: jest.fn(),
   clearRect: jest.fn(),
